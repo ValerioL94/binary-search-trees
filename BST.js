@@ -8,12 +8,35 @@ class Node {
 
 class Tree {
   constructor(array) {
-    this.root = buildTree(array);
+    this.root = this.buildTree(array);
   }
   buildTree(array) {
-    // Sort the array and remove any duplicates
-    // Turn the array into a balanced BST of Node objects
-    // return the level-0 root node of the array,
+    const sortedArray = this.sortFilter(array);
+    const balancedBST = this.sortedArrayToBST(
+      sortedArray,
+      0,
+      sortedArray.length - 1
+    );
+    return balancedBST;
+  }
+  sortFilter(array) {
+    return array
+      .sort((a, b) => {
+        return a - b;
+      })
+      .filter((num, index) => {
+        return array.indexOf(num) === index;
+      });
+  }
+  sortedArrayToBST(arr, start, end) {
+    if (start > end) {
+      return null;
+    }
+    let mid = parseInt((start + end) / 2);
+    let node = new Node(arr[mid]);
+    node.left = this.sortedArrayToBST(arr, start, mid - 1);
+    node.right = this.sortedArrayToBST(arr, mid + 1, end);
+    return node;
   }
   insert(value) {}
   delete(value) {}
@@ -41,3 +64,8 @@ const prettyPrint = (node, prefix = '', isLeft = true) => {
     prettyPrint(node.left, `${prefix}${isLeft ? '    ' : '│   '}`, true);
   }
 };
+
+let test = [1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 645, 324];
+const tree = new Tree(test);
+// console.dir(tree.root, { depth: null });
+prettyPrint(tree.root);
