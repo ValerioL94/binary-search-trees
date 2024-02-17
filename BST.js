@@ -1,6 +1,6 @@
 class Node {
-  constructor(data) {
-    this.data = data;
+  constructor(d) {
+    this.data = d;
     this.left = null;
     this.right = null;
   }
@@ -11,34 +11,49 @@ class Tree {
     this.root = this.buildTree(array);
   }
   buildTree(array) {
-    const sortedArray = this.sortFilter(array);
-    const balancedBST = this.sortedArrayToBST(
+    const sortedArray = sortFilter(array);
+    const balancedBST = sortedArrayToBST(
       sortedArray,
       0,
       sortedArray.length - 1
     );
     return balancedBST;
-  }
-  sortFilter(array) {
-    return array
-      .sort((a, b) => {
-        return a - b;
-      })
-      .filter((num, index) => {
-        return array.indexOf(num) === index;
-      });
-  }
-  sortedArrayToBST(arr, start, end) {
-    if (start > end) {
-      return null;
+
+    function sortFilter(array) {
+      return array
+        .sort((a, b) => {
+          return a - b;
+        })
+        .filter((num, index) => {
+          return array.indexOf(num) === index;
+        });
     }
-    let mid = parseInt((start + end) / 2);
-    let node = new Node(arr[mid]);
-    node.left = this.sortedArrayToBST(arr, start, mid - 1);
-    node.right = this.sortedArrayToBST(arr, mid + 1, end);
-    return node;
+    function sortedArrayToBST(arr, start, end) {
+      if (start > end) {
+        return null;
+      }
+      let mid = parseInt((start + end) / 2);
+      let node = new Node(arr[mid]);
+      node.left = sortedArrayToBST(arr, start, mid - 1);
+      node.right = sortedArrayToBST(arr, mid + 1, end);
+      return node;
+    }
   }
-  insert(value) {}
+  insert(value) {
+    this.root = insertRec(value, this.root);
+    function insertRec(value, root) {
+      if (root === null) return (root = new Node(value));
+      if (root.data === value) return root;
+      if (root.data > value) {
+        root.left = insertRec(value, root.left);
+      } else if (root.data < value) {
+        root.right = insertRec(value, root.right);
+      }
+      return root;
+    }
+    return this.root;
+  }
+
   delete(value) {}
   find(value) {}
   levelOrder(callback) {}
@@ -68,4 +83,13 @@ const prettyPrint = (node, prefix = '', isLeft = true) => {
 let test = [1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 645, 324];
 const tree = new Tree(test);
 // console.dir(tree.root, { depth: null });
+// prettyPrint(tree.root);
+tree.insert(2);
+tree.insert(6);
+tree.insert(10);
+tree.insert(40);
+tree.insert(270);
+tree.insert(555);
+tree.insert(999);
+console.dir(tree.root, { depth: null });
 prettyPrint(tree.root);
