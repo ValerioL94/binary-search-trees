@@ -54,7 +54,43 @@ class Tree {
     return this.root;
   }
 
-  delete(value) {}
+  delete(value) {
+    this.root = deleteRec(value, this.root);
+    function deleteRec(value, root) {
+      if (root === null) return;
+      if (root.data === value) {
+        if (root.left === null && root.right === null) {
+          return null;
+        } else if (root.data === value && root.left === null) {
+          return root.right;
+        } else if (root.data === value && root.right === null) {
+          return root.left;
+        } else {
+          let parent = root;
+          let next = root.right;
+          while (next.left !== null) {
+            parent = next;
+            next = next.left;
+          }
+          if (parent !== root) {
+            parent.left = next.right;
+          } else {
+            parent.right = next.right;
+          }
+          root.data = next.data;
+          return root;
+        }
+      } else {
+        if (root.data > value && root.left) {
+          root.left = deleteRec(value, root.left);
+        } else if (root.data < value && root.right) {
+          root.right = deleteRec(value, root.right);
+        }
+      }
+      return root;
+    }
+    return this.root;
+  }
   find(value) {}
   levelOrder(callback) {}
   inOrder(callback) {}
@@ -91,5 +127,11 @@ tree.insert(40);
 tree.insert(270);
 tree.insert(555);
 tree.insert(999);
+tree.insert(0);
+tree.delete(8);
+tree.delete(4);
+tree.delete(67);
+tree.delete(270);
+
 console.dir(tree.root, { depth: null });
 prettyPrint(tree.root);
