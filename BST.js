@@ -91,7 +91,20 @@ class Tree {
     }
     return this.root;
   }
-  find(value) {}
+  find(value) {
+    let node = findRec(value, this.root);
+    function findRec(value, root) {
+      if (root.data === value) return root;
+      else {
+        if (root.data > value && root.left) {
+          return findRec(value, root.left);
+        } else if (root.data < value && root.right) {
+          return findRec(value, root.right);
+        } else return null;
+      }
+    }
+    return node;
+  }
   levelOrder(callback) {}
   inOrder(callback) {}
   preOrder(callback) {}
@@ -132,6 +145,7 @@ tree.delete(8);
 tree.delete(4);
 tree.delete(67);
 tree.delete(270);
-
-console.dir(tree.root, { depth: null });
+// console.dir(tree.root, { depth: null });
 prettyPrint(tree.root);
+console.log(tree.find(10));
+console.log(tree.find(1000));
