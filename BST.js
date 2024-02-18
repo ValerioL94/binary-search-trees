@@ -105,7 +105,24 @@ class Tree {
     }
     return node;
   }
-  levelOrder(callback) {}
+  levelOrder(callback) {
+    if (!this.root) {
+      return [];
+    }
+    let result = [];
+    const queue = [this.root];
+    let n = 0;
+    while (queue.length) {
+      const currentNode = queue.shift();
+      callback
+        ? callback(currentNode.data, n++)
+        : result.push(currentNode.data);
+      if (currentNode.left) queue.push(currentNode.left);
+      if (currentNode.right) queue.push(currentNode.right);
+    }
+    return result;
+  }
+
   inOrder(callback) {}
   preOrder(callback) {}
   postOrder(callback) {}
@@ -115,7 +132,6 @@ class Tree {
   reBalance() {}
 }
 
-// node = root
 const prettyPrint = (node, prefix = '', isLeft = true) => {
   if (node === null) {
     return;
@@ -147,5 +163,13 @@ tree.delete(67);
 tree.delete(270);
 // console.dir(tree.root, { depth: null });
 prettyPrint(tree.root);
-console.log(tree.find(10));
-console.log(tree.find(1000));
+// console.log(tree.find(10));
+// console.log(tree.find(1000));
+// tree.levelOrder(print);
+// function print(node, n) {
+//   console.log(`Node ${n}: ${node}`);
+// }
+// console.log(tree.levelOrder());
+// tree.inOrder();
+// tree.preOrder();
+// tree.postOrder();
