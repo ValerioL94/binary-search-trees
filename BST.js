@@ -11,6 +11,7 @@ class Tree {
     this.root = this.buildTree(array);
   }
   buildTree(array) {
+    if (!array) return;
     const sortedArray = sortFilter(array);
     const balancedBST = sortedArrayToBST(
       sortedArray,
@@ -42,7 +43,7 @@ class Tree {
   insert(value) {
     this.root = insertRec(value, this.root);
     function insertRec(value, root) {
-      if (root === null) return (root = new Node(value));
+      if (!root) return (root = new Node(value));
       if (root.data === value) return root;
       if (root.data > value) {
         root.left = insertRec(value, root.left);
@@ -57,7 +58,7 @@ class Tree {
   delete(value) {
     this.root = deleteRec(value, this.root);
     function deleteRec(value, root) {
-      if (root === null) return;
+      if (!root) return;
       if (root.data === value) {
         if (root.left === null && root.right === null) {
           return null;
@@ -111,7 +112,7 @@ class Tree {
     }
     let result = [];
     const queue = [this.root];
-    let n = 0;
+    let n = 1;
     while (queue.length) {
       const currentNode = queue.shift();
       callback
@@ -122,10 +123,42 @@ class Tree {
     }
     return result;
   }
-
-  inOrder(callback) {}
-  preOrder(callback) {}
-  postOrder(callback) {}
+  inOrder(callback) {
+    let array = [];
+    let n = 1;
+    inOrderRec(this.root);
+    function inOrderRec(root) {
+      if (!root) return;
+      inOrderRec(root.left);
+      callback ? callback(root.data, n++) : array.push(root.data);
+      inOrderRec(root.right);
+    }
+    return array;
+  }
+  preOrder(callback) {
+    let array = [];
+    let n = 1;
+    preOrderRec(this.root);
+    function preOrderRec(root) {
+      if (!root) return;
+      callback ? callback(root.data, n++) : array.push(root.data);
+      preOrderRec(root.left);
+      preOrderRec(root.right);
+    }
+    return array;
+  }
+  postOrder(callback) {
+    let array = [];
+    let n = 1;
+    postOrderRec(this.root);
+    function postOrderRec(root) {
+      if (!root) return;
+      postOrderRec(root.left);
+      postOrderRec(root.right);
+      callback ? callback(root.data, n++) : array.push(root.data);
+    }
+    return array;
+  }
   height(node) {}
   depth(node) {}
   isBalanced() {}
@@ -133,43 +166,50 @@ class Tree {
 }
 
 const prettyPrint = (node, prefix = '', isLeft = true) => {
-  if (node === null) {
+  if (!node) {
     return;
   }
-  if (node.right !== null) {
+  if (node.right != null) {
     prettyPrint(node.right, `${prefix}${isLeft ? '│   ' : '    '}`, false);
   }
   console.log(`${prefix}${isLeft ? '└── ' : '┌── '}${node.data}`);
-  if (node.left !== null) {
+  if (node.left != null) {
     prettyPrint(node.left, `${prefix}${isLeft ? '    ' : '│   '}`, true);
   }
 };
 
 let test = [1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 645, 324];
 const tree = new Tree(test);
-// console.dir(tree.root, { depth: null });
 // prettyPrint(tree.root);
-tree.insert(2);
-tree.insert(6);
+// console.dir(tree.root, { depth: null });
+tree.insert(0);
 tree.insert(10);
 tree.insert(40);
 tree.insert(270);
 tree.insert(555);
 tree.insert(999);
-tree.insert(0);
-tree.delete(8);
-tree.delete(4);
-tree.delete(67);
-tree.delete(270);
+// prettyPrint(tree.root);
 // console.dir(tree.root, { depth: null });
-prettyPrint(tree.root);
-// console.log(tree.find(10));
-// console.log(tree.find(1000));
+tree.delete(0);
+tree.delete(10);
+tree.delete(40);
+tree.delete(270);
+tree.delete(555);
+tree.delete(999);
+tree.delete(10000);
+// prettyPrint(tree.root);
+// console.dir(tree.root, { depth: null });
+// console.log(tree.find(23));
+// console.log(tree.find(10000));
+
+function print(node, n) {
+  console.log(`Node ${n}: ${node}`);
+}
 // tree.levelOrder(print);
-// function print(node, n) {
-//   console.log(`Node ${n}: ${node}`);
-// }
 // console.log(tree.levelOrder());
-// tree.inOrder();
-// tree.preOrder();
-// tree.postOrder();
+// tree.inOrder(print);
+// console.log(tree.inOrder());
+// tree.preOrder(print);
+// console.log(tree.preOrder());
+// tree.postOrder(print);
+// console.log(tree.postOrder());
