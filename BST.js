@@ -191,7 +191,12 @@ class Tree {
       }
     }
   }
-  isBalanced() {}
+  isBalanced() {
+    let rootLeft = this.height(tree.root.left.data);
+    let rootRight = this.height(tree.root.right.data);
+    if (Math.abs(rootLeft - rootRight) > 1) return false;
+    else return true;
+  }
   reBalance() {}
 }
 
@@ -245,7 +250,7 @@ function print(node, n) {
 // tree.postOrder(print);
 // console.log(tree.postOrder());
 
-prettyPrint(tree.root);
+// prettyPrint(tree.root);
 
 // console.log(tree.height(8));
 // console.log(tree.height(67));
@@ -253,8 +258,18 @@ prettyPrint(tree.root);
 // console.log(tree.height(645));
 // console.log(tree.height(888));
 
-console.log(tree.depth(8));
-console.log(tree.depth(67));
-console.log(tree.depth(324));
-console.log(tree.depth(645));
-console.log(tree.depth(888));
+// console.log(tree.depth(8));
+// console.log(tree.depth(67));
+// console.log(tree.depth(324));
+// console.log(tree.depth(645));
+// console.log(tree.depth(888));
+
+prettyPrint(tree.root);
+console.log(tree.isBalanced());
+
+tree.insert(950);
+prettyPrint(tree.root);
+console.log(tree.isBalanced());
+
+console.log(tree.reBalance());
+prettyPrint(tree.root);
