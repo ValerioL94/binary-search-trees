@@ -197,7 +197,10 @@ class Tree {
     if (Math.abs(rootLeft - rootRight) > 1) return false;
     else return true;
   }
-  reBalance() {}
+  reBalance() {
+    let arr = this.inOrder();
+    this.root = this.buildTree(arr);
+  }
 }
 
 const prettyPrint = (node, prefix = '', isLeft = true) => {
@@ -264,12 +267,14 @@ function print(node, n) {
 // console.log(tree.depth(645));
 // console.log(tree.depth(888));
 
-prettyPrint(tree.root);
-console.log(tree.isBalanced());
+// prettyPrint(tree.root);
+// console.log(tree.isBalanced());
 
 tree.insert(950);
 prettyPrint(tree.root);
 console.log(tree.isBalanced());
 
-console.log(tree.reBalance());
+tree.reBalance();
 prettyPrint(tree.root);
+
+console.log(tree.isBalanced());
