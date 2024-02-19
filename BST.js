@@ -1,12 +1,4 @@
-class Node {
-  constructor(d) {
-    this.data = d;
-    this.left = null;
-    this.right = null;
-  }
-}
-
-class Tree {
+export default class Tree {
   constructor(array) {
     this.root = this.buildTree(array);
   }
@@ -192,14 +184,22 @@ class Tree {
     }
   }
   isBalanced() {
-    let rootLeft = this.height(tree.root.left.data);
-    let rootRight = this.height(tree.root.right.data);
+    let rootLeft = this.height(this.root.left.data);
+    let rootRight = this.height(this.root.right.data);
     if (Math.abs(rootLeft - rootRight) > 1) return false;
     else return true;
   }
   reBalance() {
     let arr = this.inOrder();
     this.root = this.buildTree(arr);
+  }
+}
+
+class Node {
+  constructor(d) {
+    this.data = d;
+    this.left = null;
+    this.right = null;
   }
 }
 
@@ -216,34 +216,34 @@ const prettyPrint = (node, prefix = '', isLeft = true) => {
   }
 };
 
-let test = [1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 645, 324];
-const tree = new Tree(test);
+// let test = [1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 645, 324];
+// const tree = new Tree(test);
 // prettyPrint(tree.root);
 // console.dir(tree.root, { depth: null });
-tree.insert(0);
-tree.insert(10);
-tree.insert(40);
-tree.insert(270);
-tree.insert(555);
-tree.insert(888);
-tree.insert(999);
+// tree.insert(0);
+// tree.insert(10);
+// tree.insert(40);
+// tree.insert(270);
+// tree.insert(555);
+// tree.insert(888);
+// tree.insert(999);
 // prettyPrint(tree.root);
 // console.dir(tree.root, { depth: null });
-tree.delete(0);
-tree.delete(10);
-tree.delete(40);
-tree.delete(270);
-tree.delete(555);
-tree.delete(999);
-tree.delete(10000);
+// tree.delete(0);
+// tree.delete(10);
+// tree.delete(40);
+// tree.delete(270);
+// tree.delete(555);
+// tree.delete(999);
+// tree.delete(10000);
 // prettyPrint(tree.root);
 // console.dir(tree.root, { depth: null });
 // console.log(tree.find(23));
 // console.log(tree.find(10000));
 
-function print(node, n) {
-  console.log(`Node ${n}: ${node}`);
-}
+// function print(node, n) {
+//   console.log(`Node ${n}: ${node}`);
+// }
 // tree.levelOrder(print);
 // console.log(tree.levelOrder());
 // tree.inOrder(print);
@@ -270,11 +270,11 @@ function print(node, n) {
 // prettyPrint(tree.root);
 // console.log(tree.isBalanced());
 
-tree.insert(950);
-prettyPrint(tree.root);
-console.log(tree.isBalanced());
+// tree.insert(950);
+// prettyPrint(tree.root);
+// console.log(tree.isBalanced());
 
-tree.reBalance();
-prettyPrint(tree.root);
+// tree.reBalance();
+// prettyPrint(tree.root);
 
-console.log(tree.isBalanced());
+// console.log(tree.isBalanced());

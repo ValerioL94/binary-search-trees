@@ -1,0 +1,13 @@
+{
+  "type": "module",
+  "name": "binary-search-trees",
+  "description": "Building a balanced binary search tree",
+  "version": "1.0.0",
+  "main": "BST.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "ValerioL94",
+  "license": "ISC"
+}
