@@ -163,7 +163,7 @@ class Tree {
     let currNode = this.find(node);
     return findHeight(currNode);
     function findHeight(node, height = 0, l, r) {
-      if (!node) return;
+      if (!node) return null;
       if (!node.left && !node.right) return height;
       else {
         if (node.left) l = findHeight(node.left, height + 1);
@@ -178,7 +178,19 @@ class Tree {
       }
     }
   }
-  depth(node) {}
+  depth(node) {
+    return findDepth(node, this.root);
+    function findDepth(node, root, depth = 0) {
+      if (root.data === node) return depth;
+      else {
+        if (root.data > node && root.left) {
+          return findDepth(node, root.left, depth + 1);
+        } else if (root.data < node && root.right) {
+          return findDepth(node, root.right, depth + 1);
+        } else return null;
+      }
+    }
+  }
   isBalanced() {}
   reBalance() {}
 }
@@ -233,5 +245,16 @@ function print(node, n) {
 // tree.postOrder(print);
 // console.log(tree.postOrder());
 
-console.log(tree.height(8));
-// prettyPrint(tree.root);
+prettyPrint(tree.root);
+
+// console.log(tree.height(8));
+// console.log(tree.height(67));
+// console.log(tree.height(324));
+// console.log(tree.height(645));
+// console.log(tree.height(888));
+
+console.log(tree.depth(8));
+console.log(tree.depth(67));
+console.log(tree.depth(324));
+console.log(tree.depth(645));
+console.log(tree.depth(888));
