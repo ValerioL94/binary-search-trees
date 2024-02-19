@@ -159,7 +159,25 @@ class Tree {
     }
     return array;
   }
-  height(node) {}
+  height(node) {
+    let currNode = this.find(node);
+    return findHeight(currNode);
+    function findHeight(node, height = 0, l, r) {
+      if (!node) return;
+      if (!node.left && !node.right) return height;
+      else {
+        if (node.left) l = findHeight(node.left, height + 1);
+        if (node.right) r = findHeight(node.right, height + 1);
+        if (l && r) {
+          if (l > r || l === r) return (height = l);
+          else return (height = r);
+        } else {
+          if (l) return (height = l);
+          if (r) return (height = r);
+        }
+      }
+    }
+  }
   depth(node) {}
   isBalanced() {}
   reBalance() {}
@@ -187,6 +205,7 @@ tree.insert(10);
 tree.insert(40);
 tree.insert(270);
 tree.insert(555);
+tree.insert(888);
 tree.insert(999);
 // prettyPrint(tree.root);
 // console.dir(tree.root, { depth: null });
@@ -213,3 +232,6 @@ function print(node, n) {
 // console.log(tree.preOrder());
 // tree.postOrder(print);
 // console.log(tree.postOrder());
+
+console.log(tree.height(8));
+// prettyPrint(tree.root);
